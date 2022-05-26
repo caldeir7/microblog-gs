@@ -1,6 +1,10 @@
 <?php 
+require "../inc/funcoes-usuarios.php";
 require "../inc/cabecalho-admin.php";
+$lerUsuarioS = lerUsuarios($conexao);
 
+$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
+$dados = lerUmUsuario($conexao, $id);
 
 ?>
        
@@ -12,12 +16,12 @@ require "../inc/cabecalho-admin.php";
 
       <div class="form-group">
         <label for="nome">Nome:</label>
-        <input class="form-control" required type="text" id="nome" name="nome">
+        <input value="<?=$dados['nome']?>" class="form-control" required type="text" id="nome" name="nome">
       </div>
 
       <div class="form-group">
         <label for="email">E-mail:</label>
-        <input class="form-control" required type="email" id="email" name="email">
+        <input value="<?=$dados['email']?>" class="form-control" required type="email" id="email" name="email">
       </div>
 
       <div class="form-group">
@@ -29,8 +33,21 @@ require "../inc/cabecalho-admin.php";
         <label for="tipo">Tipo:</label>
         <select class="custom-select" name="tipo" id="tipo" required>
           <option value=""></option>                  
-          <option value="editor">Editor</option>     
-          <option	value="admin">Administrador</option>
+          <option <?php 
+            if($dados['tipo'] == 'editor')
+              echo " selected "
+            
+          ?> 
+          value="editor">Editor</option>
+          
+          
+          <option	
+            <?php
+              if($dados['tipo'] == 'admin' )
+                echo " selected "
+              
+            ?>
+          value="admin">Administrador</option>
         </select>
       </div>
       

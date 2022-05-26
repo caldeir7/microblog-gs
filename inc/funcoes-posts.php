@@ -2,11 +2,11 @@
 require "conecta.php";
 
 /* Usada em post-insere.php */
-function inserirPost(mysqli $conexao){
-    $sql = "";
+// function inserirPost(mysqli $conexao){
+//     // $sql = "INSERT INTO posts(titulo, text) VALUES("AAAA")";
     
-    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
-} // fim inserirPost
+//     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+// } // fim inserirPost
 
 
 
