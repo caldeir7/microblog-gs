@@ -1,9 +1,10 @@
 <?php 
-require"../inc/funcoes-usuarios.php";
+require "../inc/funcoes-usuarios.php";
 require "../inc/cabecalho-admin.php"; 
 
 $lerUsuarioS = lerUsuarios($conexao);
 $quantidade = count($lerUsuarioS);
+
 
 ?>
 <div class="row">
@@ -43,7 +44,7 @@ $quantidade = count($lerUsuarioS);
 						</td>
 						<td class="text-center">
 							<a class="btn btn-danger btn-sm excluir" 
-							href="usuario-exclui.php?">
+							href="usuario-exclui.php?id=<?=$lerUsuario['id']?>">
 								Excluir
 							</a>
 						</td>

@@ -1,9 +1,13 @@
-<?php require "../inc/cabecalho-admin.php"; ?> 
+<?php require "../inc/cabecalho-admin.php";
+require "../inc/funcoes-usuarios.php";
+$lerUsuarioS = lerUsuarios($conexao);
+
+// ?> 
     
         
     <article class="jumbotron bg-white shadow">
       <h2 class="display-4">
-      Olá Usuário Logado...
+      
       </h2>
       <p class="lead">Você está no <b>painel de controle e administração</b> do
   site Microblog e seu <b>nível de acesso</b> é <span class="badge badge-info">nível/tipo do usuário</span>.
