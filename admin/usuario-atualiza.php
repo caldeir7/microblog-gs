@@ -6,6 +6,26 @@ $lerUsuarioS = lerUsuarios($conexao);
 $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
 $dados = lerUmUsuario($conexao, $id);
 
+if(isset($_POST['atualizar'])){
+  $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
+	$email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
+	$tipo = filter_input(INPUT_POST, 'tipo', FILTER_SANITIZE_SPECIAL_CHARS);
+	
+  //Lógica para a senha Se o campo da senha do formulario estiver vazio, então significa que o usuário não mudou a senha.
+  if(empty($_POST['senha'])){
+    $senha = $dados['senha']; //Manter a senha Já Existente no banco
+  } else {
+
+  /* Caso Contrario, se o usuário digitou alguma coisa no campo senha, precisaremos verificar a senha digitada. */
+
+  $senha = verificaSenha($_POST['senha'], $dados['senha']);
+  }
+
+  // echo "banco ".$dados['senha'];
+  // echo "<br>";
+  // echo "formulario ".$senha;
+}
+
 ?>
        
 <div class="row">
