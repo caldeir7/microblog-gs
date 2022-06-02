@@ -25,7 +25,7 @@ function verificaAcesso(){
 
 //Entrada login.php
 function login(int $id, string $nome, string $email, string $tipo){
-    //Variaveis de sessão ao logar
+    //Criando Variaveis de sessão ao logar
     $_SESSION['id'] = $id;
     $_SESSION['nome'] = $nome;
     $_SESSION['email'] = $email;
@@ -36,10 +36,20 @@ function login(int $id, string $nome, string $email, string $tipo){
 
 //Saidas nas páginas administrativas quando clicamos em sair
 function logout(){
+    // Destruindo variaveis de sessao ao sair
     session_start();
     session_destroy();
-    header("location:../index.php");
+    header("location:../login.php?logout");
     die();
 }
 
+
+//função verificaAcessoAdmin
+function verificaAcessoAdmin(){
+    if($_SESSION['tipo'] != 'admin'){
+        //redireciona para a página não autorizada
+        header("location:nao-autorizado.php");
+        die();
+    }
+}
 

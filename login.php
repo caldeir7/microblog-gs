@@ -42,7 +42,7 @@ if(isset($_POST['entrar'])){
       //4) [IF/ELSE] Se as senhas forem iguais a do banco de dados
       if(password_verify($senha, $usuario['senha'])){
         //4) Então inicia o login para área administrativa
-        login($usuario['id'], $usuario['nome'], $usuario['email'], $usuario['senha']);
+        login($usuario['id'], $usuario['nome'], $usuario['email'], $usuario['tipo']);
         header("location:admin/index.php");
       } else {
         //4) Se a senha estiver errada redireciona para login e cria um parametro indicando  que a sneha esta incorreta

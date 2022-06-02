@@ -1,6 +1,8 @@
 <?php 
 require "../inc/funcoes-usuarios.php";
 require "../inc/cabecalho-admin.php";
+verificaAcessoAdmin();
+
 $lerUsuarioS = lerUsuarios($conexao);
 
 $id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_NUMBER_INT);
