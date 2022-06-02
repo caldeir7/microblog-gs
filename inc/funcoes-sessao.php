@@ -39,7 +39,7 @@ function logout(){
     // Destruindo variaveis de sessao ao sair
     session_start();
     session_destroy();
-    header("location:../login.php?logout");
+    header("location:../index.php?logout");
     die();
 }
 

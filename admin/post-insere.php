@@ -1,13 +1,29 @@
 <?php 
 require "../inc/cabecalho-admin.php"; 
+require "../inc/funcoes-posts.php";
 
+if(isset($_POST['inserir'])){
+  $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_SPECIAL_CHARS);
+  $texto = filter_input(INPUT_POST, 'texto', FILTER_SANITIZE_SPECIAL_CHARS);
+  $resumo = filter_input(INPUT_POST, 'resumo', FILTER_SANITIZE_SPECIAL_CHARS);
+  
+
+  //upload de imagem (blob arquivos binário .pdf .jpg. exe)
+  // Obtendo dados do arquivo enviado
+  $imagem = $_FILES['imagem'];
+  //Função upload (responsavel por enviar o arquivo para o hd do servidor)
+  upload($imagem);
+  //Função inserirpost(atenção: mandaremos apenas o name da imagem)
+  inserirPost($conexao, $titulo, $texto, $resumo, $imagem['name'], $_SESSION['id']);
+  header("location:posts.php");
+}
 ?>
        
   <div class="row">
     <article class="col-12 bg-white rounded shadow my-1 py-4">
       <h2 class="text-center">Inserir Post</h2>
-
-      <form  class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
+          <!-- Adicionamos o atributo enctype para habilitar o suporte de envio de arquivos via formulario -->
+      <form enctype="multipart/form-data"  class="mx-auto w-75" action="" method="post" id="form-inserir" name="form-inserir">
 
         <div class="form-group">
           <label for="titulo">Título:</label>
@@ -27,6 +43,7 @@ require "../inc/cabecalho-admin.php";
                 
         <div class="form-group">
           <label for="imagem" class="form-label">Selecione uma imagem:</label>
+             <!-- Para arqvuio tipo file -->
           <input required class="form-control" type="file" id="imagem" name="imagem"
           accept="image/png, image/jpeg, image/gif, image/svg+xml">
         </div>
@@ -38,4 +55,4 @@ require "../inc/cabecalho-admin.php";
     </article>
   </div>
 
-<?php require "../inc/rodape-admin.php"; ?> 
+<?php require "../inc/rodape-admin.php"; ?>
