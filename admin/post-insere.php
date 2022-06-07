@@ -11,6 +11,10 @@ if(isset($_POST['inserir'])){
   //upload de imagem (blob arquivos binário .pdf .jpg. exe)
   // Obtendo dados do arquivo enviado
   $imagem = $_FILES['imagem'];
+  // echo "<pre>" ;
+  //   var_dump($imagem);
+  // echo "</pre>";
+  // die();
   //Função upload (responsavel por enviar o arquivo para o hd do servidor)
   upload($imagem);
   //Função inserirpost(atenção: mandaremos apenas o name da imagem)

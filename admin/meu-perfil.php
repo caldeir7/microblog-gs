@@ -9,7 +9,7 @@ if(isset($_POST['atualizar'])){
   $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
   $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
   $tipo = $_SESSION['tipo']; // recupera qual o tipo do usuário.
-  
+  $id = $_SESSION['id'];
 
   // 1) if Verifica se o campo input ('senha') esta vazio.
   if(empty($_POST['senha'])){
@@ -19,7 +19,7 @@ if(isset($_POST['atualizar'])){
     //caso contrario se o usuario digitou algo no campo senha precisamos verificar a senha digitada
     $senha = verificaSenha($_POST['senha'], $dados['senha']);
   }
-  atualizarUsuario($conexao, $_SESSION['id'], $nome, $email, $tipo, $senha);
+  atualizarUsuario($conexao, $_SESSION['id'], $nome, $email, $senha, $tipo);
   header("location:index.php");
 
 }
