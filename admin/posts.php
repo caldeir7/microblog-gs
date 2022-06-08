@@ -1,7 +1,7 @@
 <?php 
 require "../inc/funcoes-posts.php";
 require "../inc/cabecalho-admin.php"; 
-verificaAcesso();
+
 
 $lerPostS = lerPosts($conexao,$_SESSION['id'], $_SESSION['tipo']);
 $quantidade = count($lerPostS);
@@ -33,7 +33,7 @@ $quantidade = count($lerPostS);
 <?php foreach($lerPostS as $leRpost) { ?>
           <tr>
             <td><?=$leRpost['titulo']?></td>
-            <td> <?=$leRpost['data']?> </td>
+            <td> <?=formataData($leRpost['data'])?> </td>
 
             <?php if($_SESSION['tipo'] == 'admin') { ?>
             <td> <?=$leRpost['autor']?></td>

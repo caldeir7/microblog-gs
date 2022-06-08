@@ -32,30 +32,41 @@ function lerPosts(mysqli $conexao, int $idUsuarioLogado, string $tipoUsuarioLoga
 
 
 /* Usada em post-atualiza.php */
-function lerUmPost(mysqli $conexao, int $id, ):array {    
-    $sql = "SELECT titulo, texto, resumo, imagem FROM posts WHERE id = $id;";
+function lerUmPost(mysqli $conexao,int $idPost, int $idUsuarioLogado, string $tipodeUsuariologado ):array {    
+    /* Se o usuario logado for admin então pode carregar os dados de qualquer post de qualquer usuario */
+    if($tipodeUsuariologado == 'admin'){
+        $sql = "SELECT id, titulo, texto, resumo, imagem, usuario_id FROM posts WHERE id = $idPost";
+    }else{
+    //Caso ontrario significa que é um usuário editor portanto só poderar carregar somento os dados dos seus posts
+        $sql = "SELECT titulo, texto, resumo, imagem, usuario_id FROM posts WHERE id = $idPost AND usuario_id = $idUsuarioLogado";
+    }
 
 	$resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
+
     return mysqli_fetch_assoc($resultado); 
 } // fim lerUmPost
 
 
 
 /* Usada em post-atualiza.php */
-function atualizarPost(mysqli $conexao, int $IdusuarioLogado, string $tipodeUusuarioLog){
-    // if($tipodeUusuarioLog == 'admin'){
-        // $sql = ""
+function atualizarPost(mysqli $conexao, int $idPost, int $idUsuarioLogado, string $tipodeUsuariologado, string $titulo, string $texto, string $resumo, string $imagem){
+    if($tipodeUsuariologado == 'admin'){
+        $sql = "UPDATE posts SET titulo = '$titulo', texto = '$texto', resumo = '$resumo', imagem = '$imagem' WHERE id = $idPost ";
+    } else{
+        $sql = "UPDATE posts SET titulo = '$titulo', texto = '$texto', resumo = '$resumo', imagem = '$imagem' WHERE id = $idPost AND usuario_id = $idUsuarioLogado";
     }
-    // $sql = "UPDATE posts SET titulo = "$titulo", texto = "$texto", resumo = "$resumo" WHERE id =$IdusuarioLogado;";
-
-    // mysqli_query($conexao, $sql) or die(mysqli_error($conexao));       
-// } // fim atualizarPost
+    mysqli_query($conexao, $sql) or die(mysqli_error($conexao));       
+} // fim atualizarPost
 
 
 
 /* Usada em post-exclui.php */
-function excluirPost(mysqli $conexao){    
-    $sql = "";
+function excluirPost(mysqli $conexao, $idPost, $IDusuarioLogado, $tipodeUsuariologado){    
+    if($tipodeUsuariologado == 'admin'){
+        $sql = "DELETE FROM posts WHERE id = $idPost";
+    }else{
+        $sql = "DELETE FROM POSTS WHERE id = $idPost AND usuario_id = $IDusuarioLogado";
+    }
 
 	mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 } // fim excluirPost
@@ -89,8 +100,9 @@ function upload($arquivo){
 
 
 /* Usada em posts.php e páginas da área pública */
-function formataData(){ 
-    
+function formataData(string $data):string{ 
+    //Pegamos a data informada, transformamos em texto(strtotime) e depois aplicamos o formato brasileiro (dia/mês/ANO)
+    return date("d/m/y H:1", strtotime($data));
 } // fim formataData
 
 
@@ -99,7 +111,7 @@ function formataData(){
 
 /* Usada em index.php */
 function lerTodosOsPosts(mysqli $conexao):array {
-    $sql = "";
+    $sql = "SELECT id, data, titulo, texto, resumo, imagem FROM posts";
     
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     $posts = [];
@@ -112,8 +124,8 @@ function lerTodosOsPosts(mysqli $conexao):array {
 
 
 /* Usada em post-detalhe.php */
-function lerDetalhes(mysqli $conexao):array {    
-    $sql = "";
+function lerDetalhes(mysqli $conexao, int $idPost):array {    
+    $sql = "SELECT id, data, titulo, texto, resumo, imagem, usuario_id FROM posts WHERE id = $idPost AND usuario_id ";
 
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     return mysqli_fetch_assoc($resultado); 
