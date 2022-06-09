@@ -125,7 +125,7 @@ function lerTodosOsPosts(mysqli $conexao):array {
 
 /* Usada em post-detalhe.php */
 function lerDetalhes(mysqli $conexao, int $idPost):array {    
-    $sql = "SELECT id, data, titulo, texto, resumo, imagem, usuario_id FROM posts WHERE id = $idPost AND usuario_id ";
+    $sql = "SELECT posts.id, posts.data, posts.titulo,posts.texto, posts.resumo, posts.imagem, usuarios.nome AS autor from posts INNER JOIN usuarios ON posts.usuario_id = usuarios.id ";
 
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     return mysqli_fetch_assoc($resultado); 
