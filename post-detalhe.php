@@ -19,7 +19,9 @@ $postDetails = lerDetalhes($conexao, $idPost);
 
 		<img src="imagens/<?=$postDetails['imagem']?>" alt="Imagem de destaque do post" class="float-left pr-2 img-fluid">
 
-		<p><?=$postDetails['texto']?></p>
+		<p class="textoos"> 
+			<?= nl2br ($postDetails['texto']) ?> 
+		</p>
 	</article>
 
 </div> <!-- FIM ROW -->
